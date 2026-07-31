@@ -2,16 +2,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public StateMachine stateMachine { get; private set; }
+
+    private EntityState idleState;
+
+    private void Awake()
     {
-        EntityState entityState = new EntityState();
+        //  StateMachine이 MonoBehaviour가 없는 스크립트이기 때문에 직접 할당해주는 과정이 필요 
+        stateMachine = new StateMachine();
+
+        idleState = new EntityState(stateMachine, "idle State");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        // 상태 머신 현재 상태 업데이트를 수행
-        //Statemachine.currentState.Update();
+        stateMachine.Initialize(idleState);
+    }
+
+    private void Update()
+    {
+        stateMachine.currentState.Update();
     }
 }
