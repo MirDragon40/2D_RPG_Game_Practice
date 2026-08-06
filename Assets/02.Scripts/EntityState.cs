@@ -5,12 +5,14 @@ using UnityEngine;
 // 2. 의도 전달: 이 클래스가 부모 전용이고 어딘가에 자식들이 있다는 것을 설명한다. 코드만 보고 설계 의도를 즉시 파악
 public abstract class EntityState
 {
+    protected Player player;
     protected StateMachine stateMachine;
     protected string stateName;
 
-    public EntityState(StateMachine stateMachine, string stateName)
+    public EntityState(Player player, StateMachine stateMachine, string stateName)
     {
         // 이 스크립트 내에서 변수를 참조하고 있음을 의미
+        this.player = player;
         this.stateMachine = stateMachine;
         this.stateName = stateName;
     }
@@ -19,21 +21,21 @@ public abstract class EntityState
     {
         // 상태가 변경될 때마다, 입력이 호출된다.
 
-        Debug.Log("I enter " + stateName);
+        //Debug.Log("I enter " + stateName);
     }
 
     public virtual void Update()
     {
         // 현재 상태가 업데이트에서 플레이어의 입력을 확인해야 하는 경우 필요한 함수
 
-        Debug.Log("I run update of " + stateName);
+        //Debug.Log("I run update of " + stateName);
     }
 
     public virtual void Exit()
     {
         // 이 함수는 상태를 종료하고 새 상태로 변경할 때마다 호출된다.
 
-        Debug.Log("I exit " + stateName);
+        //Debug.Log("I exit " + stateName);
     }
 
 
