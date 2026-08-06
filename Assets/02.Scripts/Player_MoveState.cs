@@ -11,9 +11,9 @@ public class Player_MoveState : EntityState
         base.Update();
 
 
-            // F를 눌러서 moveState로 전환한다. (테스트용 )
-            if (Input.GetKeyDown(KeyCode.F))
-                stateMachine.ChangeState(player.moveState);
+            // 방향키를 눌러서 moveState로 전환한다.
+            if (player.moveInput.x == 0)
+                stateMachine.ChangeState(player.idleState);
     }
 
 }

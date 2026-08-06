@@ -19,9 +19,21 @@ public class StateMachine
 
     public void ChangeState(EntityState newState)
     {
+        if (currentState == newState)
+        {
+            return;
+        }
+
         currentState.Exit();
         currentState = newState;
         currentState.Enter();
     }
+
+    public void UpdateActiveState()
+    {
+        currentState.Update();
+    }
+
+
 
 }

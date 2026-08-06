@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Animator anim { get; private set; }
+    public Rigidbody2D rb { get; private set; }
+
+
     private PlayerInputSet input;
     private StateMachine stateMachine;
 
@@ -13,6 +17,9 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+
         //  StateMachine이 MonoBehaviour가 없는 스크립트이기 때문에 직접 할당해주는 과정이 필요 (PlayerInputSet도 마찬가지)
         stateMachine = new StateMachine();
         input = new PlayerInputSet();
@@ -25,7 +32,7 @@ public class Player : MonoBehaviour
     {
         input.Enable();
 
-        input.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        input.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>(); // ctx: context
         input.Player.Movement.canceled += ctx => moveInput = Vector2.zero;
 
     }
@@ -42,6 +49,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        stateMachine.currentState.Update();
+        stateMachine.UpdateActiveState();
+    }
+
+    // 해당 메서드를 만드는 이유 - 단일 진입점(통로를 하나로), 캡슐화, 관심사 분리 등등
+    public void SetVelocity(float xVelocity, float yVelocity)
+    {
+        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
     }
 }

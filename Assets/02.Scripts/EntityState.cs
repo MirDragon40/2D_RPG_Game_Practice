@@ -7,35 +7,47 @@ public abstract class EntityState
 {
     protected Player player;
     protected StateMachine stateMachine;
-    protected string stateName;
+    protected string animBoolName;
 
-    public EntityState(Player player, StateMachine stateMachine, string stateName)
+    protected Animator anim;
+
+    public EntityState(Player player, StateMachine stateMachine, string animBoolName)
     {
         // 이 스크립트 내에서 변수를 참조하고 있음을 의미
         this.player = player;
         this.stateMachine = stateMachine;
-        this.stateName = stateName;
+        this.animBoolName = animBoolName;
+
+        // player 스크립트에서 Awake() 가 실행되는 순간 EntityState() 생성자가 호출되는데, 그때 이 anim이 여기에서 할당된다. 
+        // 목적은 캐싱, 
+        anim = player.anim;
     }
 
     public virtual void Enter()
     {
         // 상태가 변경될 때마다, 입력이 호출된다.
 
-        //Debug.Log("I enter " + stateName);
+        Debug.Log("I enter " + animBoolName);
+
+        player.anim.SetBool(animBoolName, true);
     }
 
     public virtual void Update()
     {
         // 현재 상태가 업데이트에서 플레이어의 입력을 확인해야 하는 경우 필요한 함수
 
-        //Debug.Log("I run update of " + stateName);
+        Debug.Log("I run update of " + animBoolName);
+
+
     }
 
     public virtual void Exit()
     {
         // 이 함수는 상태를 종료하고 새 상태로 변경할 때마다 호출된다.
 
-        //Debug.Log("I exit " + stateName);
+        Debug.Log("I exit " + animBoolName);
+
+        player.anim.SetBool(animBoolName, false);
     }
 
 
