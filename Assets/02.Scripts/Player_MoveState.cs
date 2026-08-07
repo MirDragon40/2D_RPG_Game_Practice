@@ -14,6 +14,8 @@ public class Player_MoveState : EntityState
             // 방향키를 눌러서 moveState로 전환한다.
             if (player.moveInput.x == 0)
                 stateMachine.ChangeState(player.idleState);
+
+        player.SetVelocity(player.moveInput.x * player.moveSpeed, player.rb.linearVelocity.y);
     }
 
 }

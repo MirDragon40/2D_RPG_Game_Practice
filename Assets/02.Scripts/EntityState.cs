@@ -10,6 +10,7 @@ public abstract class EntityState
     protected string animBoolName;
 
     protected Animator anim;
+    protected Rigidbody2D rb;
 
     public EntityState(Player player, StateMachine stateMachine, string animBoolName)
     {
@@ -21,6 +22,7 @@ public abstract class EntityState
         // player 스크립트에서 Awake() 가 실행되는 순간 EntityState() 생성자가 호출되는데, 그때 이 anim이 여기에서 할당된다. 
         // 목적은 캐싱, 
         anim = player.anim;
+        rb = player.rb;
     }
 
     public virtual void Enter()
@@ -34,7 +36,7 @@ public abstract class EntityState
 
     public virtual void Update()
     {
-        // 현재 상태가 업데이트에서 플레이어의 입력을 확인해야 하는 경우 필요한 함수
+        // 현재 상태가 플레이어의 입력을 확인해야 하는 경우 필요한 함수
 
         Debug.Log("I run update of " + animBoolName);
 

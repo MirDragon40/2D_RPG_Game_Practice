@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
 
+    [Header("Movement Details")]
+    public float moveSpeed;
+
     // get, priavte set을 사용하면 인스펙터창에서 보이지 않는다. 
     public Vector2 moveInput { get; private set; }
 
