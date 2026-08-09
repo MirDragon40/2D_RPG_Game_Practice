@@ -11,6 +11,7 @@ public abstract class EntityState
 
     protected Animator anim;
     protected Rigidbody2D rb;
+    protected PlayerInputSet input;
 
     public EntityState(Player player, StateMachine stateMachine, string animBoolName)
     {
@@ -23,6 +24,7 @@ public abstract class EntityState
         // 목적은 캐싱, 
         anim = player.anim;
         rb = player.rb;
+        input = player.input;
     }
 
     public virtual void Enter()
@@ -31,7 +33,7 @@ public abstract class EntityState
 
         Debug.Log("I enter " + animBoolName);
 
-        player.anim.SetBool(animBoolName, true);
+        anim.SetBool(animBoolName, true);
     }
 
     public virtual void Update()
@@ -39,6 +41,8 @@ public abstract class EntityState
         // 현재 상태가 플레이어의 입력을 확인해야 하는 경우 필요한 함수
 
         Debug.Log("I run update of " + animBoolName);
+
+        anim.SetFloat("yVelocity", rb.linearVelocity.y);
 
 
     }
@@ -49,7 +53,7 @@ public abstract class EntityState
 
         Debug.Log("I exit " + animBoolName);
 
-        player.anim.SetBool(animBoolName, false);
+        anim.SetBool(animBoolName, false);
     }
 
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player_IdleState : EntityState
+public class Player_IdleState : Player_GroundedState
 
 {
     // stateName은 애니메이터에서 애니메이션 파라미터의 이름으로 사용 
@@ -15,8 +15,7 @@ public class Player_IdleState : EntityState
 
         if (player.moveInput.x != 0)
             stateMachine.ChangeState(player.moveState);
-            
-        
+
     }
 
 }
