@@ -9,14 +9,20 @@ public class Player : MonoBehaviour
 
     private StateMachine stateMachine;
 
+
+
     public Player_IdleState idleState { get; private set; }
     public Player_MoveState moveState { get; private set; }
     public Player_JumpState jumpState { get; private set; }
     public Player_FallState fallState { get; private set; }
 
+
     [Header("Movement Details")]
     public float moveSpeed;
     public float jumpForce = 5;
+
+    [Range(0,1)] // 슬라이더로 작동
+    public float inAirMoveMultiplier = .7f; // 0~1 사이여야 함
     // 처음엔 오른쪽을 향하고 있으므로 true
     private bool facingRight = true;
     // get, priavte set을 사용하면 인스펙터창에서 보이지 않는다. 
@@ -25,7 +31,9 @@ public class Player : MonoBehaviour
 
     [Header("Collision detection")]
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private LayerMask whatIsGround;
 
+    public bool groundDetected { get; private set; }
 
     private void Awake()
     {
@@ -70,6 +78,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        HandleCollisionDetection();
         stateMachine.UpdateActiveState();
     }
 
@@ -103,11 +112,19 @@ public class Player : MonoBehaviour
         facingRight = !facingRight;
     }
 
+    private void HandleCollisionDetection()
+    {
+        // 플레이어 위치에서 아래로 groundCheckDistance만큼 보이지 않는 선을 쏴서, 뭔가 맞았으면 groundDetected에 true, 아무것도 안 맞았으면 false를 넣는다.
+        // whatIsGround로 걸러내지 않는다면 자기 자신이 감지된다. 
+        groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
+    }
+
 
     private void OnDrawGizmos()
     {
-        // 오브젝트로부터 지면까지의 거리를 
+        // 오브젝트로부터 지면방향으로 groundCheckDistance 만큼의 라인을 그린다.
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));
     }
+
 
 }
