@@ -22,11 +22,9 @@ public class Player_JumpState : Player_AiredState
     {
         base.Update();
 
+        // Y velocity가 감소하면 FallState로 전환하기
         if (rb.linearVelocity.y < 0)
             stateMachine.ChangeState(player.fallState);
-
-        // Y velocity가 감소하면 캐릭터가 떨어지도록하기
-        // FallState로 전환하기
 
     }
 

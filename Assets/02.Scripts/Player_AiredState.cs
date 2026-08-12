@@ -12,7 +12,10 @@ public class Player_AiredState : EntityState
 
         // x는 유저가 움직이는 대로 움직이도록, y는 중력의 영향만 받도록
         if (player.moveInput.x != 0)
-            player.SetVelocity(player.moveInput.x * player.moveSpeed, rb.linearVelocity.y);
+            player.SetVelocity(player.moveInput.x * (player.moveSpeed * player.inAirMoveMultiplier), rb.linearVelocity.y);
+
+        if (player.wallDetected)
+            stateMachine.ChangeState(player.wallSlideState);
     }
 
 
