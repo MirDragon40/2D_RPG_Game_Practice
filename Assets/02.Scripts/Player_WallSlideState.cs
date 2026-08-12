@@ -11,11 +11,17 @@ public class Player_WallSlideState : EntityState
     {
         base.Update();
 
-        if (input.Player.Jump.WasPressedThisFrame())
-            stateMachine.ChangeState(player.wallJumpState);
-
-
+        // 상태가 바뀐 후에는 실행될 필요가 없으므로 메서드 안에서 위쪽에 위치한다.
         HandleWallSlide();
+
+
+        if (input.Player.Jump.WasPressedThisFrame())
+        {
+            stateMachine.ChangeState(player.wallJumpState);
+            // 혹시 모를 오류 예방을 위해 return 추가 (코드 순서에 따라 오류가 발생할 수 있으므로)
+            return;
+        }
+
 
         if (player.wallDetected == false)
             stateMachine.ChangeState(player.fallState);

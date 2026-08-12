@@ -11,7 +11,7 @@ public class Player_WallJumpState : EntityState
         base.Enter();
 
         // 스프라이트로 보면 캐릭터가 벽의 반대방향을 향하고 있으나, 사실은 벽쪽을 바라보고 있는 상태이므로 facingDir을 곱해준다. 
-        player.SetVelocity(player.wallJumpForce.x * player.facingDir, player.wallJumpForce.y);
+        player.SetVelocity(player.wallJumpForce.x * -player.facingDir, player.wallJumpForce.y);
     }
 
     public override void Update()
